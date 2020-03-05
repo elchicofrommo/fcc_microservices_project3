@@ -38,6 +38,14 @@ var timeout = 10000;
 app.use(bodyParser.urlencoded({extended: 'false'}));
 app.use(bodyParser.json());
 
+function logger(req, resp, next){
+  console.log(`${req.method} ${req.path} - ${req.ip} `);
+  console.log(JSON.stringify(req.body));
+  next();
+}
+
+app.use(logger);
+
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
